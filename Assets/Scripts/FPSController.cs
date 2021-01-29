@@ -7,11 +7,14 @@ using UnityEngine;
 public class FPSController : MonoBehaviour
 {
     public float walkingSpeed = 7.5f;
-    public float jumpSpeed = 8.0f;
+    public float runningSpeed = 11.5f;
     public float gravity = 20.0f;
     public Camera playerCamera;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
+
+    [SerializeField] private float slopeForce;
+    [SerializeField] private float slopeForceRayLength;
 
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
@@ -30,32 +33,18 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
+        float horizInput = Input.GetAxis("Horizontal");
+        float vertInput = Input.GetAxis("Vertical");
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? walkingSpeed * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? walkingSpeed * Input.GetAxis("Horizontal") : 0;
-        float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
-        {
-            moveDirection.y = jumpSpeed;
-        }
-        else
-        {
-            moveDirection.y = movementDirectionY;
-        }
+        Vector3 forwardMovement = transform.forward * vertInput;
+        Vector3 rightMovement = transform.right * horizInput;
 
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.deltaTime;
-            Debug.Log(moveDirection.y);
-        } else {
-            moveDirection.y = 0;
-        }
 
-        characterController.Move(moveDirection * Time.deltaTime);
+        characterController.SimpleMove(Vector3.ClampMagnitude(forwardMovement + rightMovement, 1.0f) * (isRunning ? runningSpeed : walkingSpeed));
+
+        if ((vertInput != 0 || horizInput != 0) && OnSlope())
+            characterController.Move(Vector3.down * characterController.height / 2 * slopeForce * Time.deltaTime);
 
         if (canMove)
         {
@@ -64,5 +53,15 @@ public class FPSController : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
+
+    private bool OnSlope()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, characterController.height / 2 * slopeForceRayLength))
+            if (hit.normal != Vector3.up)
+                return true;
+        return false;
     }
 }

@@ -441,11 +441,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingSpeed: 4
+  runningSpeed: 6
   jumpSpeed: 8
   gravity: 20
   playerCamera: {fileID: 1782708657}
   lookSpeed: 2
   lookXLimit: 45
+  slopeForce: 5
+  slopeForceRayLength: 1.5
   canMove: 1
 --- !u!1 &1690639138
 GameObject:
