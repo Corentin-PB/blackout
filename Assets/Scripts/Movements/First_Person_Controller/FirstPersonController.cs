@@ -546,7 +546,7 @@ namespace VHS
                         m_inAirTimer = 0f;
                         m_finalMoveVector.y = -stickToGroundForce;
 
-                        // HandleJump();
+                        HandleJump();
                     }
                     else
                     {
