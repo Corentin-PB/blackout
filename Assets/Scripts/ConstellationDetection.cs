@@ -15,6 +15,8 @@ public class ConstellationDetection : MonoBehaviour {
     [Tooltip("Temps de validation en secondes")]
     public float validationTime = 2f;
 
+    [Header("Debug")] public bool visualiseVision = true;
+
     [HideInInspector]
     public bool isValidated;
     private float _validationRatio;
@@ -115,6 +117,19 @@ public class DetectionTargetEditor : Editor {
         Handles.DrawWireDisc(rangeStart, -dt.direction, circleSize2);
 
         Handles.DrawWireDisc(rangeEnd, -dt.direction, circleSize);
+
+        if (dt.visualiseVision) {
+            Handles.color = Color.green;
+            Vector3 start3 = (rangeStart + rangeEnd) / 2f;
+            float angle3 = Mathf.Acos(1 - dt.visionDelta);
+            Vector3 topDelta3 = Vector3.RotateTowards(-dt.direction.normalized, dirUp, angle3, 100f).normalized;
+            Ray r3 = new Ray(start3, topDelta3);
+            Plane p3 = new Plane(dt.direction.normalized, dt.transform.position);
+            p3.Raycast(r3, out float distanceToView);
+            float circleSize3 = Vector3.Distance(dt.transform.position, start3 + topDelta3 * distanceToView);
+            
+            Handles.DrawWireDisc(dt.transform.position, dt.direction, circleSize3);
+        }
     }
 
     private void DropAreaGUI() {
