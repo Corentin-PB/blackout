@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class DetectionTarget : MonoBehaviour {
+public class ConstellationDetection : MonoBehaviour {
     [Header("General")]
     public float distanceToPoint = 5f;
     public float distanceRange = 1f;
@@ -15,7 +15,8 @@ public class DetectionTarget : MonoBehaviour {
     [Tooltip("Temps de validation en secondes")]
     public float validationTime = 2f;
 
-    private bool _isValidated;
+    [HideInInspector]
+    public bool isValidated;
     private float _validationRatio;
     private float _validationVelocity = 0f;
 
@@ -37,34 +38,37 @@ public class DetectionTarget : MonoBehaviour {
         if (CheckDetection()) {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 1f, ref _validationVelocity, validationTime);
         } else {
-            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
+            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0.2f, ref _validationVelocity, 1f);
         }
 
-        if (_validationRatio > 0.97f) _isValidated = true;
         transform.GetChild(0).transform.localScale = Vector3.one * _validationRatio;
-
-        if (_isValidated) {
-            var material = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>()?.material;
-            if (material is { })
-                material.color = Color.green;
-            var material2 = transform.GetChild(1).gameObject.GetComponent<MeshRenderer>()?.material;
-            if (material2 is { })
-                material2.color = Color.green;
+        if (!isValidated && _validationRatio > 0.97f) {
+            isValidated = true;
+            OnValidated();
         }
+    }
+
+    public void OnValidated() {
+        var material = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>()?.material;
+        if (material is { })
+            material.color = Color.green;
+        Color c = GetComponent<LineRenderer>().material.color;
+        c.a = 1f;
+        GetComponent<LineRenderer>().material.color = c;
     }
 }
 
-[CustomEditor(typeof(DetectionTarget))]
+[CustomEditor(typeof(ConstellationDetection))]
 public class DetectionTargetEditor : Editor {
     public override void OnInspectorGUI() {
-        DetectionTarget dt = (DetectionTarget) target;
+        ConstellationDetection dt = (ConstellationDetection) target;
         DrawDefaultInspector();
         GUILayout.Space(10);
         DropAreaGUI();
     }
 
     private void OnSceneGUI() {
-        DetectionTarget dt = (DetectionTarget) target;
+        ConstellationDetection dt = (ConstellationDetection) target;
         Transform transform = dt.transform;
 
         Vector3 dirUp = Vector3.Cross(dt.direction.normalized, Vector3.left);
@@ -114,7 +118,7 @@ public class DetectionTargetEditor : Editor {
     }
 
     private void DropAreaGUI() {
-        DetectionTarget dt = (DetectionTarget) target;
+        ConstellationDetection dt = (ConstellationDetection) target;
         
         Event evt = Event.current;
         Rect dropArea = GUILayoutUtility.GetRect(0.0f, 50.0f, GUILayout.ExpandWidth(true));
