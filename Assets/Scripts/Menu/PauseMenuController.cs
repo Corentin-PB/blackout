@@ -11,6 +11,8 @@ namespace Menu
     {
         public GameObject pauseMenu;
         public GameObject patternsUI;
+        public VHS.FirstPersonController playerController;
+        public VHS.CameraController cameraController;
         
         /// <summary>Function <c>ReturnToMenu</c> used to go back to the main menu</summary>
         ///
@@ -31,11 +33,17 @@ namespace Menu
         {
             if(Input.GetKeyDown(KeyCode.Escape))
             {
-                if ( ! pauseMenu.activeSelf )
-                {
-                    patternsUI.SetActive( false );
+                pauseMenu.SetActive(!pauseMenu.activeSelf);
+                patternsUI.SetActive(!patternsUI.activeSelf);
+                cameraController.enabled = !cameraController.enabled;
+                playerController.enabled = !playerController.enabled;
+
+                if (Cursor.lockState == CursorLockMode.Locked) {
+                    Cursor.lockState = CursorLockMode.None;
+                } else {
+                    Cursor.lockState = CursorLockMode.Locked;
                 }
-                pauseMenu.SetActive( ! pauseMenu.activeSelf );
+                Cursor.visible = !Cursor.visible;
             }
 
             if (!pauseMenu.activeSelf)

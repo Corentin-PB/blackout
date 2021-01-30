@@ -60,6 +60,7 @@ public class ConstellationDetection : MonoBehaviour {
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ConstellationDetection))]
 public class DetectionTargetEditor : Editor {
     public override void OnInspectorGUI() {
@@ -165,3 +166,4 @@ public class DetectionTargetEditor : Editor {
         }
     }
 }
+#endif
