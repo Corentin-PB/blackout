@@ -10,6 +10,7 @@ namespace Menu
     public class PauseMenuController : MonoBehaviour
     {
         public GameObject pauseMenu;
+        public GameObject patternsUI;
         
         /// <summary>Function <c>ReturnToMenu</c> used to go back to the main menu</summary>
         ///
@@ -30,7 +31,24 @@ namespace Menu
         {
             if(Input.GetKeyDown(KeyCode.Escape))
             {
+                if ( ! pauseMenu.activeSelf )
+                {
+                    patternsUI.SetActive( false );
+                }
                 pauseMenu.SetActive( ! pauseMenu.activeSelf );
+            }
+
+            if (!pauseMenu.activeSelf)
+            {
+                bool keyDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl); 
+                if( keyDown && ! patternsUI.activeSelf )
+                {
+                    patternsUI.SetActive( true );
+                }
+                else if ( !keyDown && patternsUI.activeSelf )
+                {
+                    patternsUI.SetActive( false );
+                }
             }
         }
     }
