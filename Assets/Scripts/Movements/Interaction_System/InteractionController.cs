@@ -38,8 +38,8 @@ namespace VHS
 
             void Update()
             {
-                CheckForInteractable();
-                CheckForInteractableInput();
+                // CheckForInteractable();
+                // CheckForInteractableInput();
             }
         #endregion
 
