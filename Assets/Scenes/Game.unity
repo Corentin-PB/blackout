@@ -4733,15 +4733,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2660610953148168160, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.27
+      value: -4.01
       objectReference: {fileID: 0}
     - target: {fileID: 2660610953148168160, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -36.419
+      value: -29.32
       objectReference: {fileID: 0}
     - target: {fileID: 2660610953148168160, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.63
+      value: 37.47
       objectReference: {fileID: 0}
     - target: {fileID: 2660610953148168160, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5416,7 +5416,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh20578
+  m_Name: pb_Mesh74794
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -22146,7 +22146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3439224058690703849}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.027, y: 0.171, z: -0}
+  m_LocalPosition: {x: 0.11, y: 0.5, z: -0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 2306824189747108565}
@@ -58273,7 +58273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486859685484111}
   m_LocalRotation: {x: -0, y: -0.86602545, z: 0, w: 0.49999994}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.8, y: -1.6, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 5602486860071031980}
@@ -59311,7 +59311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486859966608385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.985, y: -1.593, z: -1.71}
+  m_LocalPosition: {x: -2.361, y: -0.935, z: -2.481}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 5602486860195931942}
@@ -59500,7 +59500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486860071031979}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45, y: -1.45, z: 4.39}
+  m_LocalPosition: {x: 0.3, y: -1.34, z: 4.39}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 5602486859685484144}
@@ -61016,7 +61016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486860487152183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1751, y: 2.6999, z: 0.152}
+  m_LocalPosition: {x: 2.239, y: 3.077, z: 0.152}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 5602486860862186794}
@@ -61398,7 +61398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486860550103106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.463, y: -2.561, z: 1.11}
+  m_LocalPosition: {x: 2.468, y: -2.342, z: 1.11}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 5602486860947306083}
@@ -64803,7 +64803,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486861340024944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.956, y: 3.307, z: -1.71}
+  m_LocalPosition: {x: 1.906, y: 3.881, z: -1.71}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 5602486860151107088}
@@ -64899,7 +64899,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5602486861384815866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.36, y: 0.84, z: 1.46}
+  m_LocalPosition: {x: 1.38, y: 1.02, z: 1.46}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 5602486861055146154}
@@ -67002,7 +67002,9 @@ MonoBehaviour:
   - {fileID: 1167034259613175255}
   - {fileID: 5602486859669957061}
   - {fileID: 5602486860873793593}
-  stars_3: []
+  stars_3:
+  - {fileID: 1167034259613175255}
+  - {fileID: 5602486860381948983}
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: 4cfa3e7d65d5e6d418ada174b50a9248, type: 3}
 --- !u!114 &6612601545807083181
