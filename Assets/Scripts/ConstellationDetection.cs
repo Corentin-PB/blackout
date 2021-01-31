@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ConstellationDetection : MonoBehaviour {
     [Header("General")]
@@ -15,6 +16,8 @@ public class ConstellationDetection : MonoBehaviour {
     [Tooltip("Temps de validation en secondes")]
     public float validationTime = 2f;
 
+    public PostProcessVolume postProcessVolume;
+
     [Header("Debug")] public bool visualiseVision = true;
 
     [HideInInspector]
@@ -24,8 +27,15 @@ public class ConstellationDetection : MonoBehaviour {
 
     private Transform _target;
 
+    private Bloom bloomParameter;
+    private ColorParameter colorParameter = new ColorParameter();
+
+    private Color colorToLerpUp;
+
     private void Start() {
         _target = Camera.main.transform;
+        bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
+        colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
     }
 
     public bool CheckDetection() {
@@ -40,8 +50,19 @@ public class ConstellationDetection : MonoBehaviour {
         if (CheckDetection()) {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 1f, ref _validationVelocity, validationTime);
         } else {
-            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0.2f, ref _validationVelocity, 1f);
+            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
         }
+        
+        if (_validationRatio > 0.03f) {
+            
+            Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
+            colorParameter.value = c;
+            bloomParameter.color.Override(colorParameter);
+
+        }
+
+
+        transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
 
         transform.GetChild(0).transform.localScale = Vector3.one * _validationRatio;
         if (!isValidated && _validationRatio > 0.97f) {

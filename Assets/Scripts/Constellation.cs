@@ -19,4 +19,6 @@ public class Constellation : MonoBehaviour {
         c.a = 0f;
         _lineRenderer.material.color = c;
     }
+
+    
 }
