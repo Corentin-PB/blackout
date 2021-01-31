@@ -68,7 +68,6 @@ public class ConstellationDetection : MonoBehaviour {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 1f, ref _validationVelocity, validationTime);
         } else {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
-            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
         }
 
         transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
@@ -77,16 +76,12 @@ public class ConstellationDetection : MonoBehaviour {
             _musicAudioSource.volume = 1 - _validationRatio;
         }
         
-        
         if (_validationRatio > 0.03f) {
-            
             Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
             colorParameter.value = c;
             bloomParameter.color.Override(colorParameter);
-
         }
-
-
+        
         transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
 
         transform.GetChild(0).transform.localScale = Vector3.one * _validationRatio;
