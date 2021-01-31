@@ -669,11 +669,30 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Made for the Global Game Jam  of January 2021.\nThe main theme was \"Lost
-    And Found\".\n\nThis game was made by:\r\n- KALITA Milo (3D artist)\n- LOURTIES
-    Thomas\r (Game / Level Designer)\n- PELLOUX Romain (Composer / Sound Deisgner)\n-
-    HEZON Romain\r (Composer / Sound Deisgner)\n- COLIN Simon (Developer)\n- PACAUD
-    BOEHM Corentin (Developer)\n- DUMARTIN Lucas (Developer)"
+  m_text: 'Made for the Global Game Jam  of January 2021.
+
+    The main theme was
+    "Lost And Found".
+
+
+    This game was made by:
+
+    - KALITA Milo (3D artist)
+
+    -
+    LOURTIES Thomas  (Game/Level Designer)
+
+    - PELLOUX Romain (Composer / Sound
+    Designer)
+
+    - HEZON Romain (Composer / Sound Designer)
+
+    - COLIN Simon
+    (Developer)
+
+    - PACAUD BOEHM Corentin (Developer)
+
+    - DUMARTIN Lucas (Developer)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
