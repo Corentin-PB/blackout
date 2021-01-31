@@ -1,3 +1,4 @@
+using Tools.Tween;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -23,9 +24,24 @@ public class ConstellationDetection : MonoBehaviour {
     private float _validationVelocity = 0f;
 
     private Transform _target;
+    private AudioSource _audioSource;
+    private LineRenderer _lineRenderer;
+    private Constellation _constellation;
 
+    private AudioSource _oneShotAudioSource;
+    private AudioSource _musicAudioSource;
+    
     private void Start() {
         _target = Camera.main.transform;
+        _constellation = GetComponent<Constellation>();
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.loop = true;
+        _audioSource.Play();
+        _audioSource.volume = 0;
+        _lineRenderer = GetComponent<LineRenderer>();
+        
+        _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
+        _musicAudioSource = GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>();
     }
 
     public bool CheckDetection() {
@@ -40,10 +56,15 @@ public class ConstellationDetection : MonoBehaviour {
         if (CheckDetection()) {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 1f, ref _validationVelocity, validationTime);
         } else {
-            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0.2f, ref _validationVelocity, 1f);
+            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
         }
 
-        transform.GetChild(0).transform.localScale = Vector3.one * _validationRatio;
+        transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
+        if (_validationRatio > 0.03f && !isValidated) {
+            _audioSource.volume = _validationRatio;
+            _musicAudioSource.volume = 1 - _validationRatio;
+        }
+        
         if (!isValidated && _validationRatio > 0.97f) {
             isValidated = true;
             OnValidated();
@@ -54,9 +75,17 @@ public class ConstellationDetection : MonoBehaviour {
         var material = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>()?.material;
         if (material is { })
             material.color = Color.green;
-        Color c = GetComponent<LineRenderer>().material.color;
+        
+        Color c = _lineRenderer.material.color;
         c.a = 1f;
-        GetComponent<LineRenderer>().material.color = c;
+        _lineRenderer.material.color = c;
+        
+        FloatTween.Create(GetHashCode().ToString(), 0f, 1f, 1f, Ease.InOutCirc, t => {
+            _musicAudioSource.volume = t.Value;
+            _audioSource.volume = 1 - t.Value;
+            print(t.Value);
+        });
+        _oneShotAudioSource.PlayOneShot(_constellation.validationSound);
     }
 }
 
