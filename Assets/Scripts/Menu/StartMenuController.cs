@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Menu
 {
@@ -9,6 +10,10 @@ namespace Menu
     ///
     public class StartMenuController : MonoBehaviour
     {
+        public GameObject creditMenu;
+
+        public GameObject startMenu;
+
         /// <summary>Function <c>PlayGame</c> used to launch the game scene</summary>
         ///
         public void PlayGame()
@@ -22,6 +27,14 @@ namespace Menu
         {
             Debug.Log("Quit game");
             Application.Quit();
+        }
+
+        /// <summary>Function <c>QuitGame</c> used to quit the game</summary>
+        ///
+        public void ToggleCreditsMenu()
+        {
+            startMenu.SetActive(creditMenu.activeSelf);
+            creditMenu.SetActive(!creditMenu.activeSelf);
         }
     }
 }

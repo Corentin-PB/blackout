@@ -51,8 +51,8 @@ public class ConstellationDetection : MonoBehaviour {
         _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
         _musicAudioSource = GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>();
 
-        bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
-        colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
+        // bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
+        // colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
     }
 
     public bool CheckDetection() {
@@ -77,9 +77,9 @@ public class ConstellationDetection : MonoBehaviour {
         }
         
         if (_validationRatio > 0.03f) {
-            Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
-            colorParameter.value = c;
-            bloomParameter.color.Override(colorParameter);
+            //Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
+            //colorParameter.value = c;
+            //bloomParameter.color.Override(colorParameter);
         }
         
         transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
@@ -92,19 +92,18 @@ public class ConstellationDetection : MonoBehaviour {
     }
 
     public void OnValidated() {
-        var material = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>()?.material;
-        if (material is { })
-            material.color = Color.green;
-        
-        Color c = _lineRenderer.material.color;
+        Color c = transform.GetChild(0).GetComponent<LineRenderer>().material.color;
         c.a = 1f;
-        _lineRenderer.material.color = c;
+        transform.GetChild(0).GetComponent<LineRenderer>().material.color = c;
+        transform.GetChild(1).GetComponent<LineRenderer>().material.color = c;
+        transform.GetChild(2).GetComponent<LineRenderer>().material.color = c;
         
         FloatTween.Create(GetHashCode().ToString(), 0f, 1f, 3f, Ease.Linear, t => {
             _musicAudioSource.volume = t.Value;
             _audioSource.volume = 1 - t.Value;
         });
         _oneShotAudioSource.PlayOneShot(_constellation.validationSound);
+
     }
 }
 
