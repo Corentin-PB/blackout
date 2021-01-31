@@ -65733,11 +65733,11 @@ MonoBehaviour:
   distanceToPoint: 21.95
   distanceRange: 6.5
   direction: {x: -0.77148587, y: -0.5094276, z: -0.38117337}
-  positionDelta: 0.02
+  positionDelta: 0.01
   visionDelta: 0.03
   validationTime: 2
   postProcessVolume: {fileID: 1341137465}
-  visualiseVision: 0
+  visualiseVision: 1
   isValidated: 0
 --- !u!4 &5996093610428506746
 Transform:
@@ -65912,14 +65912,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab952674a42d774a9af4b3f0b21cf2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToPoint: 35.57
-  distanceRange: 9
+  distanceToPoint: 38.25
+  distanceRange: 6.7
   direction: {x: 0.6499114, y: -0.31986472, z: -0.6894213}
-  positionDelta: 0.01
+  positionDelta: 0.005
   visionDelta: 0.01
   validationTime: 2
   postProcessVolume: {fileID: 1341137465}
-  visualiseVision: 0
+  visualiseVision: 1
   isValidated: 0
 --- !u!82 &5996093610710661220
 AudioSource:
@@ -66054,7 +66054,7 @@ MonoBehaviour:
   distanceToPoint: 22.44
   distanceRange: 7.5
   direction: {x: -0.8286396, y: -0.4698586, z: 0.30428487}
-  positionDelta: 0.03
+  positionDelta: 0.015
   visionDelta: 0.046
   validationTime: 2
   postProcessVolume: {fileID: 1341137465}
@@ -66215,14 +66215,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab952674a42d774a9af4b3f0b21cf2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToPoint: 23.85
-  distanceRange: 11.9
+  distanceToPoint: 29.61
+  distanceRange: 9.9
   direction: {x: -0.054843847, y: -0.29138035, z: 0.95503384}
-  positionDelta: 0.02
+  positionDelta: 0.015
   visionDelta: 0.03
   validationTime: 2
   postProcessVolume: {fileID: 1341137465}
-  visualiseVision: 0
+  visualiseVision: 1
   isValidated: 0
 --- !u!1 &5996093611018705559
 GameObject:
@@ -66561,7 +66561,7 @@ MonoBehaviour:
   distanceToPoint: 13.61
   distanceRange: 11.8
   direction: {x: 0.15976334, y: -0.9811968, z: -0.108298026}
-  positionDelta: 0.02
+  positionDelta: 0.01
   visionDelta: 0.03
   validationTime: 2
   postProcessVolume: {fileID: 1341137465}
