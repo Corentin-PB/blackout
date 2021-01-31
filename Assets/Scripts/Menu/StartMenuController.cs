@@ -14,6 +14,12 @@ namespace Menu
 
         public GameObject startMenu;
 
+        private void Awake()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         /// <summary>Function <c>PlayGame</c> used to launch the game scene</summary>
         ///
         public void PlayGame()
