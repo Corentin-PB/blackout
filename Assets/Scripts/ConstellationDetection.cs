@@ -2,6 +2,7 @@ using Tools.Tween;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ConstellationDetection : MonoBehaviour {
     [Header("General")]
@@ -15,6 +16,8 @@ public class ConstellationDetection : MonoBehaviour {
     public float visionDelta = 0.05f;
     [Tooltip("Temps de validation en secondes")]
     public float validationTime = 2f;
+
+    public PostProcessVolume postProcessVolume;
 
     [Header("Debug")] public bool visualiseVision = true;
 
@@ -30,6 +33,11 @@ public class ConstellationDetection : MonoBehaviour {
 
     private AudioSource _oneShotAudioSource;
     private AudioSource _musicAudioSource;
+
+    private Bloom bloomParameter;
+    private ColorParameter colorParameter = new ColorParameter();
+
+    private Color colorToLerpUp;
     
     private void Start() {
         _target = Camera.main.transform;
@@ -42,6 +50,9 @@ public class ConstellationDetection : MonoBehaviour {
         
         _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
         _musicAudioSource = GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>();
+
+        bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
+        colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
     }
 
     public bool CheckDetection() {
@@ -57,6 +68,7 @@ public class ConstellationDetection : MonoBehaviour {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 1f, ref _validationVelocity, validationTime);
         } else {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
+            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
         }
 
         transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
@@ -65,6 +77,19 @@ public class ConstellationDetection : MonoBehaviour {
             _musicAudioSource.volume = 1 - _validationRatio;
         }
         
+        
+        if (_validationRatio > 0.03f) {
+            
+            Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
+            colorParameter.value = c;
+            bloomParameter.color.Override(colorParameter);
+
+        }
+
+
+        transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
+
+        transform.GetChild(0).transform.localScale = Vector3.one * _validationRatio;
         if (!isValidated && _validationRatio > 0.97f) {
             isValidated = true;
             OnValidated();
