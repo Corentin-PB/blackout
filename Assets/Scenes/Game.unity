@@ -4779,6 +4779,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2660610953148168174, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: runSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660610953148168174, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: jumpSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660610953148168174, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: walkSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: smoothAmount.x
       value: 15
@@ -4786,6 +4798,10 @@ PrefabInstance:
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: smoothAmount.y
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: cameraZoom.runFOV
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
