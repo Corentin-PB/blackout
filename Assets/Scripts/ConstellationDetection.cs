@@ -33,9 +33,11 @@ public class ConstellationDetection : MonoBehaviour {
     private AudioSource _oneShotAudioSource;
     private AudioSource _musicAudioSource;
 
-    private Material[] starsMaterials; 
+    private Material[] starsMaterials;
+    private Color starsMaterialColor;
+    private Color starMaterialColorToLerpTo;
 
-    private Color colorToLerpUp;
+    private int indexStarsMaterialColors;
     
     private void Start() {
         _target = Camera.main.transform;
@@ -45,15 +47,19 @@ public class ConstellationDetection : MonoBehaviour {
         _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
         _musicAudioSource = GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>();
 
-        colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
-
         starsMaterials = new Material[15];
-        
+
+        indexStarsMaterialColors = 0;
         for (int i = 3; i < transform.childCount; i++)
         {
             starsMaterials[i - 3] = transform.GetChild(i).GetComponent<MeshRenderer>().material;
+            indexStarsMaterialColors++;
         }
         
+        starsMaterialColor = starsMaterials[0].GetColor("_EmissionColor");
+        starMaterialColorToLerpTo = starsMaterialColor;
+        starMaterialColorToLerpTo *= 1.5f;
+
     }
 
     public bool CheckDetection() {
@@ -76,29 +82,13 @@ public class ConstellationDetection : MonoBehaviour {
             _musicAudioSource.volume = 1 - _validationRatio;
         }
         
-        if (_validationRatio > 0.03f)
+        if (_validationRatio > 0.03f && !isValidated)
         {
-            /*colorParameter.Interp(Color.white, colorToLerpUp, _validationRatio);
-
-            foreach (Transform child in transform)
+            for (int i = 0; i < indexStarsMaterialColors; i++)
             {
-                if (child.GetInstanceID() == transform.GetInstanceID())
-                {
-                    for (int i = 3; i < child.childCount; i++)
-                    {
-                        
-                        child.GetChild(i).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", );
-                    }
-                }
-                else
-                {
-                    
-                }
-            }*/
-            
-            // Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
-            // colorParameter.value = c;
-            // bloomParameter.color.Override(colorParameter);
+                Color c = Color.Lerp(starsMaterialColor, starMaterialColorToLerpTo, _validationRatio);
+                starsMaterials[i].SetColor("_EmissionColor", c);
+            }
         }
         
         if (!isValidated && _validationRatio > 0.97f) {
@@ -108,6 +98,14 @@ public class ConstellationDetection : MonoBehaviour {
     }
 
     public void OnValidated() {
+        
+        ColorTween.Create(GetHashCode().ToString() + 1, starMaterialColorToLerpTo, starsMaterialColor, 1.5f, Ease.Linear, t => {
+            for (int i = 0; i < indexStarsMaterialColors; i++)
+            {
+                starsMaterials[i].SetColor("_EmissionColor", t.Value);
+            }
+        });
+        
         Color c = transform.GetChild(0).GetComponent<LineRenderer>().material.color;
         c.a = 1f;
         transform.GetChild(0).GetComponent<LineRenderer>().material.color = c;
