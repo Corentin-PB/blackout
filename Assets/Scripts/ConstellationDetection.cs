@@ -34,8 +34,8 @@ public class ConstellationDetection : MonoBehaviour {
 
     private void Start() {
         _target = Camera.main.transform;
-        bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
-        colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
+        //bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
+        //colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
     }
 
     public bool CheckDetection() {
@@ -55,9 +55,9 @@ public class ConstellationDetection : MonoBehaviour {
         
         if (_validationRatio > 0.03f) {
             
-            Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
-            colorParameter.value = c;
-            bloomParameter.color.Override(colorParameter);
+            //Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
+            //colorParameter.value = c;
+            //bloomParameter.color.Override(colorParameter);
 
         }
 
@@ -72,12 +72,11 @@ public class ConstellationDetection : MonoBehaviour {
     }
 
     public void OnValidated() {
-        var material = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>()?.material;
-        if (material is { })
-            material.color = Color.green;
-        Color c = GetComponent<LineRenderer>().material.color;
+        Color c = transform.GetChild(0).GetComponent<LineRenderer>().material.color;
         c.a = 1f;
-        GetComponent<LineRenderer>().material.color = c;
+        transform.GetChild(0).GetComponent<LineRenderer>().material.color = c;
+        transform.GetChild(1).GetComponent<LineRenderer>().material.color = c;
+        transform.GetChild(2).GetComponent<LineRenderer>().material.color = c;
     }
 }
 

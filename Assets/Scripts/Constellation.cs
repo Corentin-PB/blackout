@@ -1,24 +1,40 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(ConstellationDetection))]
 public class Constellation : MonoBehaviour {
-    public Transform[] stars;
+    public Transform[] stars_1;
+    public Transform[] stars_2;
+    public Transform[] stars_3;
 
-    private LineRenderer _lineRenderer;
+    private LineRenderer[] _lineRenderers;
 
     private void Start() {
-        _lineRenderer = GetComponent<LineRenderer>();
 
-        _lineRenderer.positionCount = stars.Length;
-        for (int i = 0; i < stars.Length; i++) {
-            _lineRenderer.SetPosition(i, stars[i].position);
+        _lineRenderers = new LineRenderer[3];
+
+        _lineRenderers[0] = transform.GetChild(0).GetComponent<LineRenderer>();
+        _lineRenderers[1] = transform.GetChild(1).GetComponent<LineRenderer>();
+        _lineRenderers[2] = transform.GetChild(2).GetComponent<LineRenderer>();
+
+        _lineRenderers[0].positionCount = stars_1.Length;
+        for (int i = 0; i < stars_1.Length; i++) {
+            _lineRenderers[0].SetPosition(i, stars_1[i].position);
         }
 
-        Color c = _lineRenderer.material.color;
-        c.a = 0f;
-        _lineRenderer.material.color = c;
-    }
+        _lineRenderers[1].positionCount = stars_2.Length;
+        for (int i = 0; i < stars_2.Length; i++) {
+            _lineRenderers[1].SetPosition(i, stars_2[i].position);
+        }
 
-    
+        _lineRenderers[2].positionCount = stars_3.Length;
+        for (int i = 0; i < stars_3.Length; i++) {
+            _lineRenderers[2].SetPosition(i, stars_3[i].position);
+        }
+
+        Color c = _lineRenderers[0].material.color;
+        c.a = 0f;
+        _lineRenderers[0].material.color = c;
+        _lineRenderers[1].material.color = c;
+        _lineRenderers[2].material.color = c;
+    }
 }
