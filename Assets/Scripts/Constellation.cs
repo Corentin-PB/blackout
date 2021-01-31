@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(ConstellationDetection))]
 [RequireComponent(typeof(AudioSource))]
 public class Constellation : MonoBehaviour {

@@ -28,14 +28,12 @@ public class ConstellationDetection : MonoBehaviour {
 
     private Transform _target;
     private AudioSource _audioSource;
-    private LineRenderer _lineRenderer;
     private Constellation _constellation;
 
     private AudioSource _oneShotAudioSource;
     private AudioSource _musicAudioSource;
 
-    private Bloom bloomParameter;
-    private ColorParameter colorParameter = new ColorParameter();
+    private Material[] starsMaterials; 
 
     private Color colorToLerpUp;
     
@@ -43,13 +41,19 @@ public class ConstellationDetection : MonoBehaviour {
         _target = Camera.main.transform;
         _constellation = GetComponent<Constellation>();
         _audioSource = GetComponent<AudioSource>();
-        _lineRenderer = GetComponent<LineRenderer>();
         
         _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
         _musicAudioSource = GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>();
 
-        // bloomParameter = postProcessVolume.profile.GetSetting<Bloom>();
-        // colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.color;
+        colorToLerpUp = transform.GetChild(3).GetComponent<MeshRenderer>().material.GetColor("_EmissionColor");
+
+        starsMaterials = new Material[15];
+        
+        for (int i = 3; i < transform.childCount; i++)
+        {
+            starsMaterials[i - 3] = transform.GetChild(i).GetComponent<MeshRenderer>().material;
+        }
+        
     }
 
     public bool CheckDetection() {
@@ -72,10 +76,29 @@ public class ConstellationDetection : MonoBehaviour {
             _musicAudioSource.volume = 1 - _validationRatio;
         }
         
-        if (_validationRatio > 0.03f) {
-            //Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
-            //colorParameter.value = c;
-            //bloomParameter.color.Override(colorParameter);
+        if (_validationRatio > 0.03f)
+        {
+            /*colorParameter.Interp(Color.white, colorToLerpUp, _validationRatio);
+
+            foreach (Transform child in transform)
+            {
+                if (child.GetInstanceID() == transform.GetInstanceID())
+                {
+                    for (int i = 3; i < child.childCount; i++)
+                    {
+                        
+                        child.GetChild(i).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", );
+                    }
+                }
+                else
+                {
+                    
+                }
+            }*/
+            
+            // Color c = Color.Lerp(Color.white, colorToLerpUp, _validationRatio);
+            // colorParameter.value = c;
+            // bloomParameter.color.Override(colorParameter);
         }
         
         if (!isValidated && _validationRatio > 0.97f) {

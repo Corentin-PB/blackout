@@ -7,7 +7,7 @@
         {
             "name": "Unity Editor",
             "type": "unity",
-            "path": "/d:/Documents/Unity/Projects/blackout_ssh/Library/EditorInstance.json",
+            "path": "/d:/Documents/Unity/Projects/blackout/Library/EditorInstance.json",
             "request": "launch"
         },
         {
