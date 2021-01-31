@@ -17,6 +17,9 @@ public class Constellation : MonoBehaviour {
     private void Start() {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = detectionSound;
+        _audioSource.loop = true;
+        _audioSource.volume = 0;
+        _audioSource.Play();
 
         _lineRenderers = new LineRenderer[3];
 

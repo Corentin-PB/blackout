@@ -43,9 +43,6 @@ public class ConstellationDetection : MonoBehaviour {
         _target = Camera.main.transform;
         _constellation = GetComponent<Constellation>();
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.loop = true;
-        _audioSource.Play();
-        _audioSource.volume = 0;
         _lineRenderer = GetComponent<LineRenderer>();
         
         _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
@@ -70,7 +67,6 @@ public class ConstellationDetection : MonoBehaviour {
             _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
         }
 
-        transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
         if (_validationRatio > 0.03f && !isValidated) {
             _audioSource.volume = _validationRatio;
             _musicAudioSource.volume = 1 - _validationRatio;
@@ -82,9 +78,6 @@ public class ConstellationDetection : MonoBehaviour {
             //bloomParameter.color.Override(colorParameter);
         }
         
-        transform.GetChild(0).transform.localScale = Vector3.one * (0.2f + _validationRatio * 0.8f);
-
-        transform.GetChild(0).transform.localScale = Vector3.one * _validationRatio;
         if (!isValidated && _validationRatio > 0.97f) {
             isValidated = true;
             OnValidated();
@@ -97,10 +90,10 @@ public class ConstellationDetection : MonoBehaviour {
         transform.GetChild(0).GetComponent<LineRenderer>().material.color = c;
         transform.GetChild(1).GetComponent<LineRenderer>().material.color = c;
         transform.GetChild(2).GetComponent<LineRenderer>().material.color = c;
-        
+
+        _audioSource.volume = 0f;
         FloatTween.Create(GetHashCode().ToString(), 0f, 1f, 3f, Ease.Linear, t => {
             _musicAudioSource.volume = t.Value;
-            _audioSource.volume = 1 - t.Value;
         });
         _oneShotAudioSource.PlayOneShot(_constellation.validationSound);
 
