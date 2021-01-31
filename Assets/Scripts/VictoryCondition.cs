@@ -1,10 +1,21 @@
+using Tools.Tween;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VictoryCondition : MonoBehaviour {
     public ConstellationDetection[] targets;
     private bool _isFinished;
 
     public GameObject sphere;
+
+    public UnityEvent m_EndEvent;
+
+    void Start() {
+        if (m_EndEvent == null)
+            m_EndEvent = new UnityEvent();
+
+        TweenStore.TryAttachToScene();
+    }
 
     private void Update() {
         if (!_isFinished) {
@@ -22,5 +33,10 @@ public class VictoryCondition : MonoBehaviour {
 
     private void OnVictory() {
         sphere.transform.localScale = Vector3.one * 4f;
+        m_EndEvent.Invoke();
+    }
+
+    public void RegisterNewEventListener(UnityAction call) {
+        m_EndEvent.AddListener(call);
     }
 }
