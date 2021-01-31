@@ -11,7 +11,7 @@ namespace VHS
             #region Private Serialized     
                 #region Data
                     [Space, Header("Data")]
-                    [SerializeField] private MovementInputData movementInputData = null;
+                    [SerializeField] public MovementInputData movementInputData = null;
                     [SerializeField] private HeadBobData headBobData = null;
 
                 #endregion
@@ -107,7 +107,7 @@ namespace VHS
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private Vector3 m_finalMoveVector;
 
                     [Space]
-                    [BoxGroup("DEBUG")][SerializeField][ReadOnly] private float m_currentSpeed;
+                    [BoxGroup("DEBUG")][SerializeField][ReadOnly] public float m_currentSpeed;
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private float m_smoothCurrentSpeed;
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private float m_finalSmoothCurrentSpeed;
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private float m_walkRunSpeedDifference;
@@ -115,7 +115,7 @@ namespace VHS
                     [Space]
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private float m_finalRayLength;
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private bool m_hitWall;
-                    [BoxGroup("DEBUG")][SerializeField][ReadOnly] private bool m_isGrounded;
+                    [BoxGroup("DEBUG")][SerializeField][ReadOnly] public bool m_isGrounded;
                     [BoxGroup("DEBUG")][SerializeField][ReadOnly] private bool m_previouslyGrounded;
 
                     [Space]
@@ -353,7 +353,7 @@ namespace VHS
                 protected virtual void CalculateFinalMovement()
                 {
                     float _smoothInputVectorMagnitude = experimental ? m_smoothInputVectorMagnitude : 1f;
-                    Vector3 _finalVector = m_smoothFinalMoveDir * m_finalSmoothCurrentSpeed * _smoothInputVectorMagnitude;
+                    Vector3 _finalVector = m_smoothFinalMoveDir * (m_finalSmoothCurrentSpeed * _smoothInputVectorMagnitude);
 
                     // We have to assign individually in order to make our character jump properly because before it was overwriting Y value and that's why it was jerky now we are adding to Y value and it's working
                     m_finalMoveVector.x = _finalVector.x ;
@@ -551,7 +551,7 @@ namespace VHS
                     else
                     {
                         m_inAirTimer += Time.deltaTime;
-                        m_finalMoveVector += Physics.gravity * gravityMultiplier * Time.deltaTime;
+                        m_finalMoveVector += Physics.gravity * (gravityMultiplier * Time.deltaTime);
                     }
                 }
 

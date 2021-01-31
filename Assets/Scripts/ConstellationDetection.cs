@@ -80,10 +80,9 @@ public class ConstellationDetection : MonoBehaviour {
         c.a = 1f;
         _lineRenderer.material.color = c;
         
-        FloatTween.Create(GetHashCode().ToString(), 0f, 1f, 1f, Ease.InOutCirc, t => {
+        FloatTween.Create(GetHashCode().ToString(), 0f, 1f, 3f, Ease.Linear, t => {
             _musicAudioSource.volume = t.Value;
             _audioSource.volume = 1 - t.Value;
-            print(t.Value);
         });
         _oneShotAudioSource.PlayOneShot(_constellation.validationSound);
     }
