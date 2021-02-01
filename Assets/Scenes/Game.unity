@@ -3318,6 +3318,8 @@ MonoBehaviour:
   patternsUI: {fileID: 2073265904637006951}
   playerController: {fileID: 651689141}
   cameraController: {fileID: 1351754530}
+  playerSource: {fileID: 2021016498}
+  soundController: {fileID: 2021016497}
 --- !u!4 &433603769
 Transform:
   m_ObjectHideFlags: 0
@@ -4792,21 +4794,29 @@ PrefabInstance:
       propertyPath: walkSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2660610953148168174, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: smoothInputSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660610953148168174, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: smoothRotateSpeed
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: sensitivity.x
-      value: 1000
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: sensitivity.y
-      value: 1000
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: smoothAmount.x
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: smoothAmount.y
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: cameraZoom.runFOV
@@ -20834,7 +20844,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.2
   Loop: 0
   Mute: 0
   Spatialize: 0

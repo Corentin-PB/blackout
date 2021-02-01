@@ -13,6 +13,8 @@ namespace Menu
         public GameObject patternsUI;
         public VHS.FirstPersonController playerController;
         public VHS.CameraController cameraController;
+        public AudioSource playerSource;
+        public PlayerSounds soundController;
         
         /// <summary>Function <c>ReturnToMenu</c> used to go back to the main menu</summary>
         ///
@@ -37,6 +39,8 @@ namespace Menu
                 patternsUI.SetActive(!patternsUI.activeSelf);
                 cameraController.enabled = !cameraController.enabled;
                 playerController.enabled = !playerController.enabled;
+                soundController.enabled = !soundController.enabled;
+                playerSource.Stop();
 
                 if (Cursor.lockState == CursorLockMode.Locked) {
                     Cursor.lockState = CursorLockMode.None;
