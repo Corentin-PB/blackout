@@ -5425,7 +5425,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh142622
+  m_Name: pb_Mesh16696
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -65941,9 +65941,15 @@ MonoBehaviour:
   positionDelta: 0.01
   visionDelta: 0.03
   validationTime: 2
-  postProcessVolume: {fileID: 1341137465}
   visualiseVision: 1
   isValidated: 0
+  validationRatio: 0
+  onValidation:
+    m_PersistentCalls:
+      m_Calls: []
+  onDetectionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &5996093610428506746
 Transform:
   m_ObjectHideFlags: 0
@@ -66123,9 +66129,15 @@ MonoBehaviour:
   positionDelta: 0.005
   visionDelta: 0.01
   validationTime: 2
-  postProcessVolume: {fileID: 1341137465}
   visualiseVision: 1
   isValidated: 0
+  validationRatio: 0
+  onValidation:
+    m_PersistentCalls:
+      m_Calls: []
+  onDetectionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &5996093610710661220
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66262,9 +66274,15 @@ MonoBehaviour:
   positionDelta: 0.015
   visionDelta: 0.046
   validationTime: 2
-  postProcessVolume: {fileID: 1341137465}
   visualiseVision: 0
   isValidated: 0
+  validationRatio: 0
+  onValidation:
+    m_PersistentCalls:
+      m_Calls: []
+  onDetectionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5996093610908365419
 GameObject:
   m_ObjectHideFlags: 0
@@ -66426,9 +66444,15 @@ MonoBehaviour:
   positionDelta: 0.015
   visionDelta: 0.03
   validationTime: 2
-  postProcessVolume: {fileID: 1341137465}
   visualiseVision: 1
   isValidated: 0
+  validationRatio: 0
+  onValidation:
+    m_PersistentCalls:
+      m_Calls: []
+  onDetectionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5996093611018705559
 GameObject:
   m_ObjectHideFlags: 0
@@ -66588,9 +66612,15 @@ MonoBehaviour:
   positionDelta: 0.01
   visionDelta: 0.02
   validationTime: 2
-  postProcessVolume: {fileID: 1341137465}
   visualiseVision: 0
   isValidated: 0
+  validationRatio: 0
+  onValidation:
+    m_PersistentCalls:
+      m_Calls: []
+  onDetectionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5996093611107970183
 GameObject:
   m_ObjectHideFlags: 0
@@ -66769,9 +66799,15 @@ MonoBehaviour:
   positionDelta: 0.01
   visionDelta: 0.03
   validationTime: 2
-  postProcessVolume: {fileID: 1341137465}
   visualiseVision: 0
   isValidated: 0
+  validationRatio: 0
+  onValidation:
+    m_PersistentCalls:
+      m_Calls: []
+  onDetectionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &5996093611595193848
 AudioSource:
   m_ObjectHideFlags: 0
@@ -67145,7 +67181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b6e9d5b0eb13c45b3a1a2b1ad935e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stars_1:
+  stars1:
   - {fileID: 1167034259300675362}
   - {fileID: 5602486861060077901}
   - {fileID: 5602486860484428019}
@@ -67154,10 +67190,11 @@ MonoBehaviour:
   - {fileID: 5602486860520701510}
   - {fileID: 5602486860945914120}
   - {fileID: 5602486861182115547}
-  stars_2: []
-  stars_3: []
+  stars2: []
+  stars3: []
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: c2acb415f3c0e7f4c8d7a13007094349, type: 3}
+  postProcessVolume: {fileID: 1341137465}
 --- !u!114 &6612601545609275457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67170,16 +67207,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b6e9d5b0eb13c45b3a1a2b1ad935e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stars_1:
+  stars1:
   - {fileID: 5602486859720161525}
   - {fileID: 5602486860083044921}
   - {fileID: 1167034259766551851}
   - {fileID: 5602486861209700927}
   - {fileID: 5602486860152762696}
-  stars_2: []
-  stars_3: []
+  stars2: []
+  stars3: []
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: 45fb6a66844d79d44a90d855da3ef37e, type: 3}
+  postProcessVolume: {fileID: 1341137465}
 --- !u!114 &6612601545719644349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67192,7 +67230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b6e9d5b0eb13c45b3a1a2b1ad935e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stars_1:
+  stars1:
   - {fileID: 5602486860455898041}
   - {fileID: 5602486860381948983}
   - {fileID: 5602486861302732520}
@@ -67201,17 +67239,18 @@ MonoBehaviour:
   - {fileID: 5602486859691426581}
   - {fileID: 5602486861172350892}
   - {fileID: 5602486861302732520}
-  stars_2:
+  stars2:
   - {fileID: 5602486860934470213}
   - {fileID: 5602486859669957061}
   - {fileID: 1167034259613175255}
   - {fileID: 5602486859669957061}
   - {fileID: 5602486860873793593}
-  stars_3:
+  stars3:
   - {fileID: 1167034259613175255}
   - {fileID: 5602486860381948983}
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: 4cfa3e7d65d5e6d418ada174b50a9248, type: 3}
+  postProcessVolume: {fileID: 1341137465}
 --- !u!114 &6612601545807083181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67224,7 +67263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b6e9d5b0eb13c45b3a1a2b1ad935e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stars_1:
+  stars1:
   - {fileID: 5602486860331964354}
   - {fileID: 5602486860523881978}
   - {fileID: 5602486860308454196}
@@ -67235,10 +67274,11 @@ MonoBehaviour:
   - {fileID: 1167034259968523207}
   - {fileID: 5602486860684229415}
   - {fileID: 5602486860627058883}
-  stars_2: []
-  stars_3: []
+  stars2: []
+  stars3: []
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: 46a079c983dea7f4e8ddb8a7dd946496, type: 3}
+  postProcessVolume: {fileID: 1341137465}
 --- !u!114 &6612601546260416476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67251,21 +67291,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b6e9d5b0eb13c45b3a1a2b1ad935e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stars_1:
+  stars1:
   - {fileID: 5602486860487152184}
   - {fileID: 5602486861340024945}
   - {fileID: 5602486861384815867}
   - {fileID: 1167034260187040438}
   - {fileID: 5602486859966608386}
   - {fileID: 5602486860071031980}
-  stars_2:
+  stars2:
   - {fileID: 5602486859957565316}
   - {fileID: 1167034260187040438}
   - {fileID: 5602486860695012020}
   - {fileID: 5602486860550103107}
-  stars_3: []
+  stars3: []
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: 24274309eb41b80409bcf0867235a0a6, type: 3}
+  postProcessVolume: {fileID: 1341137465}
 --- !u!114 &6612601547241519186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67278,15 +67319,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b6e9d5b0eb13c45b3a1a2b1ad935e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stars_1:
+  stars1:
   - {fileID: 5602486861061709800}
   - {fileID: 5602486859291219735}
-  stars_2:
+  stars2:
   - {fileID: 1167034259020625208}
   - {fileID: 5602486860657225324}
-  stars_3: []
+  stars3: []
   detectionSound: {fileID: 8300000, guid: b7d14039f2880cf49b488e9e348422b6, type: 3}
   validationSound: {fileID: 8300000, guid: 1004f7af2f1388248a8e5b3ec08009b3, type: 3}
+  postProcessVolume: {fileID: 1341137465}
 --- !u!120 &6944155467391381525
 LineRenderer:
   m_ObjectHideFlags: 0
