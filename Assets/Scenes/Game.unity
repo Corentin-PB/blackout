@@ -4793,6 +4793,14 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: sensitivity.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
+      propertyPath: sensitivity.y
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660610954243589629, guid: aea2d86c2a412cc4595c942ed282cb4f, type: 3}
       propertyPath: smoothAmount.x
       value: 15
       objectReference: {fileID: 0}
