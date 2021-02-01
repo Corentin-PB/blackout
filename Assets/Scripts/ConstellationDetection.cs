@@ -1,123 +1,63 @@
-using Tools.Tween;
+using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using Object = UnityEngine.Object;
-using UnityEngine.Rendering.PostProcessing;
 
 public class ConstellationDetection : MonoBehaviour {
-    [Header("General")]
-    public float distanceToPoint = 5f;
+    [Header("General")] public float distanceToPoint = 5f;
     public float distanceRange = 1f;
     public Vector3 direction = Vector3.forward;
-    [Range(0, 1f)]
-    public float positionDelta = 0.05f;
+    [Range(0, 1f)] public float positionDelta = 0.05f;
 
-    [Range(0, 1f)]
-    public float visionDelta = 0.05f;
+    [Range(0, 1f)] public float visionDelta = 0.05f;
+
     [Tooltip("Temps de validation en secondes")]
     public float validationTime = 2f;
 
-    public PostProcessVolume postProcessVolume;
-
     [Header("Debug")] public bool visualiseVision = true;
 
-    [HideInInspector]
-    public bool isValidated;
-    private float _validationRatio;
-    private float _validationVelocity = 0f;
+    [HideInInspector] public bool isValidated;
+    public float validationRatio;
+    private float _oldValidationRatio;
+    private float _validationVelocity;
 
     private Transform _target;
-    private AudioSource _audioSource;
-    private Constellation _constellation;
 
-    private AudioSource _oneShotAudioSource;
-    private AudioSource _musicAudioSource;
+    [HideInInspector] public UnityEvent onValidation = new UnityEvent();
+    [HideInInspector] public UnityEvent onDetectionChange = new UnityEvent();
 
-    private Material[] starsMaterials;
-    private Color starsMaterialColor;
-    private Color starMaterialColorToLerpTo;
-
-    private int indexStarsMaterialColors;
-    
     private void Start() {
-        _target = Camera.main.transform;
-        _constellation = GetComponent<Constellation>();
-        _audioSource = GetComponent<AudioSource>();
-        
-        _oneShotAudioSource = GameObject.FindWithTag("AudioSource").GetComponent<AudioSource>();
-        _musicAudioSource = GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>();
-
-        starsMaterials = new Material[15];
-
-        indexStarsMaterialColors = 0;
-        for (int i = 3; i < transform.childCount; i++)
-        {
-            starsMaterials[i - 3] = transform.GetChild(i).GetComponent<MeshRenderer>().material;
-            indexStarsMaterialColors++;
-        }
-        
-        starsMaterialColor = starsMaterials[0].GetColor("_EmissionColor");
-        starMaterialColorToLerpTo = starsMaterialColor;
-        starMaterialColorToLerpTo *= 1.5f;
-
+        if (Camera.main is { }) _target = Camera.main.transform;
     }
 
-    public bool CheckDetection() {
+    private bool CheckDetection() {
         bool visionCheck = Mathf.Abs(Vector3.Dot(direction.normalized, _target.forward.normalized)) > 1 - visionDelta;
-        bool positionCheck = Mathf.Abs(Vector3.Dot(direction.normalized, (_target.position - transform.position).normalized)) > 1 - positionDelta;
+        bool positionCheck =
+            Mathf.Abs(Vector3.Dot(direction.normalized, (_target.position - transform.position).normalized)) >
+            1 - positionDelta;
         float distanceToTarget = Vector3.Distance(_target.position, transform.position);
-        bool distanceCheck = ( distanceToTarget > distanceToPoint ) && ( distanceToTarget < distanceToPoint + distanceRange );
+        bool distanceCheck =
+            (distanceToTarget > distanceToPoint) && (distanceToTarget < distanceToPoint + distanceRange);
         return visionCheck && distanceCheck && positionCheck;
     }
 
     private void Update() {
         if (CheckDetection()) {
-            _validationRatio = Mathf.SmoothDamp(_validationRatio, 1f, ref _validationVelocity, validationTime);
+            validationRatio = Mathf.SmoothDamp(validationRatio, 1f, ref _validationVelocity, validationTime);
         } else {
-            _validationRatio = Mathf.SmoothDamp(_validationRatio, 0f, ref _validationVelocity, 1f);
+            validationRatio = Mathf.SmoothDamp(validationRatio, 0f, ref _validationVelocity, 1f);
         }
 
-        if (_validationRatio > 0.03f && !isValidated) {
-            _audioSource.volume = _validationRatio;
-            _musicAudioSource.volume = 1 - _validationRatio;
+        if (Math.Abs(_oldValidationRatio - validationRatio) > 0.001f) {
+            _oldValidationRatio = validationRatio;
+            onDetectionChange.Invoke();
         }
-        
-        if (_validationRatio > 0.03f && !isValidated)
-        {
-            for (int i = 0; i < indexStarsMaterialColors; i++)
-            {
-                Color c = Color.Lerp(starsMaterialColor, starMaterialColorToLerpTo, _validationRatio);
-                starsMaterials[i].SetColor("_EmissionColor", c);
-            }
-        }
-        
-        if (!isValidated && _validationRatio > 0.97f) {
+
+        if (!isValidated && validationRatio > 0.90f) {
             isValidated = true;
-            OnValidated();
+            onValidation.Invoke();
         }
-    }
-
-    public void OnValidated() {
-        
-        ColorTween.Create(GetHashCode().ToString() + 1, starMaterialColorToLerpTo, starsMaterialColor, 1.5f, Ease.Linear, t => {
-            for (int i = 0; i < indexStarsMaterialColors; i++)
-            {
-                starsMaterials[i].SetColor("_EmissionColor", t.Value);
-            }
-        });
-        
-        Color c = transform.GetChild(0).GetComponent<LineRenderer>().material.color;
-        c.a = 1f;
-        transform.GetChild(0).GetComponent<LineRenderer>().material.color = c;
-        transform.GetChild(1).GetComponent<LineRenderer>().material.color = c;
-        transform.GetChild(2).GetComponent<LineRenderer>().material.color = c;
-
-        _audioSource.volume = 0f;
-        FloatTween.Create(GetHashCode().ToString(), 0f, 1f, 3f, Ease.Linear, t => {
-            _musicAudioSource.volume = t.Value;
-        });
-        _oneShotAudioSource.PlayOneShot(_constellation.validationSound);
-
     }
 }
 
@@ -125,7 +65,6 @@ public class ConstellationDetection : MonoBehaviour {
 [CustomEditor(typeof(ConstellationDetection))]
 public class DetectionTargetEditor : Editor {
     public override void OnInspectorGUI() {
-        ConstellationDetection dt = (ConstellationDetection) target;
         DrawDefaultInspector();
         GUILayout.Space(10);
         DropAreaGUI();
@@ -152,12 +91,13 @@ public class DetectionTargetEditor : Editor {
         Vector3 rightDelta = Vector3.RotateTowards(dt.direction.normalized, dirRight, angle, 100f).normalized;
         Vector3 leftDelta = Vector3.RotateTowards(dt.direction.normalized, -dirRight, angle, 100f).normalized;
 
-        Ray r = new Ray(dt.transform.position, topDelta);
+        var position = dt.transform.position;
+        Ray r = new Ray(position, topDelta);
         Plane p = new Plane(-dt.direction.normalized, rangeEnd);
         p.Raycast(r, out float distanceToLastPlane);
         float circleSize = Vector3.Distance(rangeEnd, start + topDelta * distanceToLastPlane);
 
-        Ray r2 = new Ray(dt.transform.position, topDelta);
+        Ray r2 = new Ray(position, topDelta);
         Plane p2 = new Plane(-dt.direction.normalized, rangeStart);
         p2.Raycast(r2, out float distanceToFirstPlane);
         float circleSize2 = Vector3.Distance(rangeStart, start + topDelta * distanceToFirstPlane);
@@ -186,11 +126,11 @@ public class DetectionTargetEditor : Editor {
             float angle3 = Mathf.Acos(1 - dt.visionDelta);
             Vector3 topDelta3 = Vector3.RotateTowards(-dt.direction.normalized, dirUp, angle3, 100f).normalized;
             Ray r3 = new Ray(start3, topDelta3);
-            Plane p3 = new Plane(dt.direction.normalized, dt.transform.position);
+            Plane p3 = new Plane(dt.direction.normalized, position);
             p3.Raycast(r3, out float distanceToView);
-            float circleSize3 = Vector3.Distance(dt.transform.position, start3 + topDelta3 * distanceToView);
+            float circleSize3 = Vector3.Distance(position, start3 + topDelta3 * distanceToView);
             
-            Handles.DrawWireDisc(dt.transform.position, dt.direction, circleSize3);
+            Handles.DrawWireDisc(position, dt.direction, circleSize3);
         }
     }
 
@@ -216,8 +156,9 @@ public class DetectionTargetEditor : Editor {
                         GameObject go = draggedObject as GameObject;
                         // Do On Drag Stuff here
                         if (go is { } && go.TryGetComponent(out Transform transform)) {
-                            dt.direction = (transform.position - dt.transform.position).normalized;
-                            dt.distanceToPoint = Vector3.Distance(transform.position, dt.transform.position) - dt.distanceRange / 2f;
+                            var position = transform.position;
+                            dt.direction = (position - dt.transform.position).normalized;
+                            dt.distanceToPoint = Vector3.Distance(position, dt.transform.position) - dt.distanceRange / 2f;
                             EditorWindow view = EditorWindow.GetWindow<SceneView>();
                             view.Repaint();
                         }
